@@ -101,16 +101,6 @@ instance RandomGen PCGen where
         in (outA, outB)
         -- TODO: This could probably be faster while still conforming to spec.
 
-instance Random PCGen where
-    -- produces a random PCGen value.
-    random gen = let
-        (x,newGen) = random gen
-        in (mkPCGen (x::Word),newGen)
-    
-    -- produces a random PCGen value but ignores the range input since it would
-    -- be nonsensical to try and use them as the "bounds" of anything.
-    randomR _ gen = random gen
-
 instance Storable PCGen where
     sizeOf _ = sizeOf (undefined :: Word64) * 2
     alignment _ = alignment (undefined :: Word64)
