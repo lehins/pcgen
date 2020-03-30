@@ -62,7 +62,7 @@ stepGen (PCGen state inc) = let
     newState = state * 6364136223846793005 + (inc .|. 1)
     xorShifted = fromIntegral (((state `shiftR` 18) `xor` state) `shiftR` 27) :: Word32
     rot = fromIntegral (state `shiftR` 59) :: Word32
-    out = (xorShifted `shiftR` (fromIntegral rot)) .|. (xorShifted `shiftL` fromIntegral ((-rot) .&. 31))
+    out = (xorShifted `shiftR` fromIntegral rot) .|. (xorShifted `shiftL` fromIntegral ((-rot) .&. 31))
     in (out, PCGen newState inc)
 
 instance RandomGen PCGen where
