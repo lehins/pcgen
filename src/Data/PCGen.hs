@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE Safe #-}
 
 -- | This module contains a permuted linear congruential pseudorandom number
@@ -100,6 +101,9 @@ instance RandomGen PCGen where
         outB = PCGen stateB (incB .|. 1)
         in (outA, outB)
         -- TODO: This could probably be faster while still conforming to spec.
+#if MIN_VERSION_random(1, 2, 0)
+    genWord32 = stepGen
+#endif
 
 instance Storable PCGen where
     sizeOf _ = sizeOf (undefined :: Word64) * 2
